@@ -1,17 +1,80 @@
 'use client'
 
+import { RotateCcw, Settings } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-export default function Navbar({ size, setSize }: { size: string, setSize: (size: string) => void }) {
+export default function Navbar(
+    { size, setSize, warmUp, setWarmUp, timer, setTimer, score, setScore, time, setTime, qClick, setQClick }: 
+    { 
+        size: string,
+        setSize: (size: string) => void,
+        warmUp: boolean,
+        setWarmUp: (warmUp: boolean) => void,
+        timer: Boolean,
+        setTimer: (timer: Boolean) => void,
+        score: number,
+        setScore: (score: number) => void,
+        time: number,
+        setTime: (time: number) => void,
+        qClick: boolean,
+        setQClick: (qClick: boolean) => void
+    }) {
     const [visible, setVisible] = useState<Boolean>(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState<Boolean>(false);
+    function resetGame() {
+        setScore(0);
+        setTime(0);
+        setWarmUp(false);
+        setTimer(false);
+    }
 
     return (
-        <div className="p-3 min-w-full h-[100px] absolute flex">
+        <div className="p-3 min-w-full h-[100px] absolute flex z-20">
             <div className=" bg-[#041e36] h-full rounded-full flex justify-between items-center w-full p-3 hover:shadow-nav"
                 style={{transition: 'box-shadow 300ms ease'}}
             >
                 <div className=" ml-4 font-[family-name:var(--font-geist-mono)]">
                     Oui
+                </div>
+                <div className="font-[family-name:var(--font-geist-mono)] text-xl flex items-center justify-center">
+                    <button
+                        onClick={() => setTimer(true)} disabled={timer === true || warmUp === true}
+                        className="p-4 rounded-full bg-[#9e761c] disabled:opacity-50"
+                        style={{transition: 'opacity 300ms ease'}}
+                    >
+                        WARM UP
+                    </button>
+                    <button onClick={resetGame} className="ml-4">
+                        <RotateCcw size={30} />
+                    </button>
+                    <div className="ml-4 relative">
+                        <button onClick={() => setIsSettingsOpen(!isSettingsOpen)}>
+                            <Settings size={30} />
+                        </button>
+                        {isSettingsOpen && (
+                            <div className="absolute top-full w-48 bg-[#041e36] divide-gray-600 mt-[2rem] rounded-lg shadow-lg py-1 z-10 ml-[-3rem]">
+                                <div className="flex items-center px-4 py-2 text-sm hover:bg-[#052847] ">
+                                    <input
+                                        type="checkbox"
+                                        className="mr-2"
+                                        checked={qClick}
+                                        onChange={(e) => {
+                                            setQClick(!qClick);
+                                        }}
+                                    />
+                                    <span>Q click mode</span>
+                                </div>
+                                {/* <button
+                                    className="block px-4 py-2 text-sm  hover:bg-[#052847] w-full text-left"
+                                    onClick={() => {
+                                    // Add your settings actions here
+                                    }}
+                                >
+                                    Setting Option 2
+                                </button> */}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className="mr-4 font-[family-name:var(--font-geist-mono)]">
                     <button onClick={() => setVisible(!visible)} id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar">Target size</button>

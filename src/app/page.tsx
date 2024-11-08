@@ -3,10 +3,16 @@
 import Image from "next/image";
 import Game from "@/client/components/Game";
 import Navbar from "@/client/components/Navbar";
+import Timer from "@/client/components/Timer";
 import { useState } from "react";
 
 export default function Home() {
   const [size, setSize] = useState<string>('3rem');
+  const [warmUp, setWarmUp] = useState<boolean>(false);
+  const [timer, setTimer] = useState<Boolean>(false);
+  const [score, setScore] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
+  const [qClick, setQClick] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen min-w-full">
@@ -14,11 +20,33 @@ export default function Home() {
         <Navbar
           size={size}
           setSize={setSize}
+          warmUp={warmUp}
+          setWarmUp={setWarmUp}
+          timer={timer}
+          setTimer={setTimer}
+          score={score}
+          setScore={setScore}
+          time={time}
+          setTime={setTime}
+          qClick={qClick}
+          setQClick={setQClick}
         />
         <Game
           size={size}
           setSize={setSize}
+          warmUp={warmUp}
+          score={score}
+          setScore={setScore}
+          time={time}
+          setTime={setTime}
+          qClick={qClick}
         />
+        {timer && <Timer
+          warmUp={warmUp}
+          setWarmUp={setWarmUp}
+          timer={timer}
+          setTimer={setTimer}
+        />}
         {/* <Image
           className="dark:invert"
           src="/next.svg"
