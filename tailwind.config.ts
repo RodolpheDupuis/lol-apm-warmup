@@ -12,6 +12,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        signBackground: "rgba(16, 49, 82, 0.32)",
       },
       boxShadow: {
         'nav': '0px 11px 15px -10px rgba(125,125,125,0.15)'

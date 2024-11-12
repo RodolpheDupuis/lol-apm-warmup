@@ -5,6 +5,7 @@ import Game from "@/client/components/Game";
 import Navbar from "@/client/components/Navbar";
 import Timer from "@/client/components/Timer";
 import { useState } from "react";
+import SignIn from "@/client/components/SignIn";
 
 export default function Home() {
   const [size, setSize] = useState<string>('3rem');
@@ -13,11 +14,13 @@ export default function Home() {
   const [score, setScore] = useState<number>(0);
   const [time, setTime] = useState<number>(0);
   const [qClick, setQClick] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen min-w-full">
       <main className="">
-        <Navbar
+        {!isSignedIn && <SignIn setIsSignedIn={setIsSignedIn} />}
+        {isSignedIn && <Navbar
           size={size}
           setSize={setSize}
           warmUp={warmUp}
@@ -30,8 +33,8 @@ export default function Home() {
           setTime={setTime}
           qClick={qClick}
           setQClick={setQClick}
-        />
-        <Game
+        />}
+        {isSignedIn && <Game
           size={size}
           setSize={setSize}
           warmUp={warmUp}
@@ -40,8 +43,8 @@ export default function Home() {
           time={time}
           setTime={setTime}
           qClick={qClick}
-        />
-        {timer && <Timer
+        />}
+        {isSignedIn && timer && <Timer
           warmUp={warmUp}
           setWarmUp={setWarmUp}
           timer={timer}

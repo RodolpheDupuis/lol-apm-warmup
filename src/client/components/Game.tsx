@@ -31,14 +31,14 @@ export default function Game({ size, setSize, warmUp, score, setScore, time, set
 
         setObjPosition();
 
-        document.addEventListener('keydown', (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             setQKey(e.key === 'q' || e.key === 'a');
-        });
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
 
         return () => {
-            document.removeEventListener('keydown', (e) => {
-                setQKey(e.key === 'q' || e.key === 'a');
-            });
+            document.removeEventListener('keydown', handleKeyDown);
         }
     }, [warmUp]);
 
