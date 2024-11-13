@@ -46,7 +46,7 @@ export default function RippleButton({ children, className = '', onClick }: Ripp
             {ripples.map((ripple) => (
                 <span
                     key={ripple.id}
-                    className="absolute bg-ripple rounded-full animate-ripple"
+                    className="absolute bg-ripple rounded-full animate-ripple "
                     style={{
                         left: ripple.x,
                         top: ripple.y,

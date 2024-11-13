@@ -58,7 +58,7 @@ export default function Navbar(
                 <div className="font-[family-name:var(--font-geist-mono)] text-xl flex items-center justify-center">
                     <button
                         onClick={() => setTimer(true)} disabled={timer === true || warmUp === true}
-                        className="p-4 rounded-full bg-[#9e761c] disabled:opacity-50"
+                        className="p-4 rounded-full bg-[#E1B230] disabled:opacity-50 hover:bg-[#E1B230]/80 transition-all duration-300 ease"
                         style={{transition: 'opacity 300ms ease'}}
                     >
                         WARM UP
@@ -88,8 +88,8 @@ export default function Navbar(
                     </div>
                 </div>
                 <div className="mr-4 font-[family-name:var(--font-geist-mono)]">
-                    <button onClick={() => setVisible(!visible)} id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar">Target size</button>
-                    {visible && <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#041e36] dark:divide-gray-600 absolute mt-[3rem] right-0 mr-4 cursor-pointer">
+                    <button onClick={() => setVisible(!visible)} id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" className="hover:bg-[#052847] rounded-full p-4 transition-all duration-300 ease">Target size</button>
+                    {visible && <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#041e36] dark:divide-gray-600 absolute mt-[1.5rem] right-0 mr-4 cursor-pointer">
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                         <li>
                             <a onClick={() => setSize('1rem')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">Small</a>

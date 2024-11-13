@@ -34,7 +34,7 @@ export default function SignIn({ setIsSignedIn }: { setIsSignedIn: (isSignedIn: 
                                 </div>
                             </div>
                             <div className="flex flex-col w-full justify-center mt-4">
-                                <RippleButton onClick={() => setIsSignedIn(true)} className="w-full h-20 bg-[#E1B230] text-white rounded-md p-2 text-2xl font-medium font-[family-name:var(--font-geist-mono)]">
+                                <RippleButton onClick={() => setIsSignedIn(true)} className="w-full h-20 bg-[#E1B230] text-white rounded-md p-2 text-2xl font-medium font-[family-name:var(--font-geist-mono)] hover:bg-[#E1B230]/80 transition-all duration-300 ease">
                                     Enter
                                 </RippleButton>
                                 <div className="flex w-full justify-between mt-1">
@@ -49,7 +49,7 @@ export default function SignIn({ setIsSignedIn }: { setIsSignedIn: (isSignedIn: 
                         </div>
                         <div className="flex flex-col w-[45%] p-2 items-center">
                             <div className="text-base font-medium text-[#8F8F8F] font-[family-name:var(--font-geist-mono)]">Continue as a guest</div>
-                            <RippleButton onClick={() => setIsSignedIn(true)} className=" mt-6 w-full h-20 bg-[#E1B230] text-white rounded-md p-2 text-2xl font-medium font-[family-name:var(--font-geist-mono)] border-none">
+                            <RippleButton onClick={() => setIsSignedIn(true)} className=" mt-6 w-full h-20 bg-[#E1B230] text-white rounded-md p-2 text-2xl font-medium font-[family-name:var(--font-geist-mono)] border-none hover:bg-[#E1B230]/80 transition-all duration-300 ease">
                                 Break your own records
                             </RippleButton>
                         </div>
