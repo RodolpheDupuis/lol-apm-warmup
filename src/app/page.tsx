@@ -33,6 +33,7 @@ export default function Home() {
           setTime={setTime}
           qClick={qClick}
           setQClick={setQClick}
+          setIsSignedIn={setIsSignedIn}
         />}
         {isSignedIn && <Game
           size={size}

@@ -1,10 +1,10 @@
 'use client'
 
-import { RotateCcw, Settings } from "lucide-react";
+import { RotateCcw, Settings, User } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 export default function Navbar(
-    { size, setSize, warmUp, setWarmUp, timer, setTimer, score, setScore, time, setTime, qClick, setQClick }: 
+    { size, setSize, warmUp, setWarmUp, timer, setTimer, score, setScore, time, setTime, qClick, setQClick, setIsSignedIn }: 
     { 
         size: string,
         setSize: (size: string) => void,
@@ -17,10 +17,13 @@ export default function Navbar(
         time: number,
         setTime: (time: number) => void,
         qClick: boolean,
-        setQClick: (qClick: boolean) => void
+        setQClick: (qClick: boolean) => void,
+        setIsSignedIn: (isSignedIn: boolean) => void
     }) {
     const [visible, setVisible] = useState<Boolean>(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState<Boolean>(false);
+    const [isUserOpen, setIsUserOpen] = useState<Boolean>(false);
+
     function resetGame() {
         setScore(0);
         setTime(0);
@@ -34,7 +37,23 @@ export default function Navbar(
                 style={{transition: 'box-shadow 300ms ease'}}
             >
                 <div className=" ml-4 font-[family-name:var(--font-geist-mono)]">
-                    Oui
+                    <button onClick={() => setIsUserOpen(!isUserOpen)} className="flex bg-[#052847] rounded-full p-2">
+                        <div className="flex">
+                            <User />
+                        </div>
+                    </button>
+                    {isUserOpen && (
+                        <div className="absolute top-full w-48 bg-[#041e36] divide-gray-600 mt-[0rem] rounded-lg shadow-lg py-1 z-10 cursor-pointer">
+                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                                <li>
+                                    <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">View profile</a>
+                                </li>
+                                <li>
+                                    <a onClick={() => setIsSignedIn(false)} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">Sign out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
                 </div>
                 <div className="font-[family-name:var(--font-geist-mono)] text-xl flex items-center justify-center">
                     <button
@@ -64,21 +83,13 @@ export default function Navbar(
                                     />
                                     <span>Q click mode</span>
                                 </div>
-                                {/* <button
-                                    className="block px-4 py-2 text-sm  hover:bg-[#052847] w-full text-left"
-                                    onClick={() => {
-                                    // Add your settings actions here
-                                    }}
-                                >
-                                    Setting Option 2
-                                </button> */}
                             </div>
                         )}
                     </div>
                 </div>
                 <div className="mr-4 font-[family-name:var(--font-geist-mono)]">
                     <button onClick={() => setVisible(!visible)} id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar">Target size</button>
-                    {visible && <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#041e36] dark:divide-gray-600 absolute mt-[3rem] right-0 mr-4">
+                    {visible && <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#041e36] dark:divide-gray-600 absolute mt-[3rem] right-0 mr-4 cursor-pointer">
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                         <li>
                             <a onClick={() => setSize('1rem')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">Small</a>
