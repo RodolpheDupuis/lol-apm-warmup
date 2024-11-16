@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  lol-warmup-back:
+    build: ./lol-warmup-back
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/lol-warmup
+  lol-warmup:
+    build: ./lol-warmup
+    ports:
+      - 3000:3000
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
