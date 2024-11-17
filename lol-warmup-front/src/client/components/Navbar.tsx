@@ -1,5 +1,6 @@
 'use client'
 
+import { AuthService } from "@/services/auth-service";
 import { RotateCcw, Settings, Trophy, User } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
@@ -31,6 +32,11 @@ export default function Navbar(
         setTimer(false);
     }
 
+    function signOut() {
+        AuthService.removeToken();
+        setIsSignedIn(false);
+    }
+
     return (
         <div className="p-3 min-w-full h-[100px] absolute flex z-20">
             <div className=" bg-[#041e36] h-full rounded-full flex justify-between items-center w-full p-3 hover:shadow-nav"
@@ -50,7 +56,7 @@ export default function Navbar(
                                         <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">View profile</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => setIsSignedIn(false)} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">Sign out</a>
+                                        <a onClick={signOut} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#052847]  dark:hover:text-white">Sign out</a>
                                     </li>
                                 </ul>
                             </div>

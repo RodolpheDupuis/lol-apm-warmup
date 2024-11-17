@@ -6,9 +6,10 @@ interface RippleButtonProps {
     children: React.ReactNode;
     className?: string;
     onClick?: () => void;
+    type: 'button' | 'submit' | 'reset';
 }
 
-export default function RippleButton({ children, className = '', onClick }: RippleButtonProps) {
+export default function RippleButton({ children, className = '', onClick, type }: RippleButtonProps) {
     const [ripples, setRipples] = useState<{ x: number, y: number, id: number }[]>([]);
 
     useLayoutEffect(() => {
@@ -42,6 +43,7 @@ export default function RippleButton({ children, className = '', onClick }: Ripp
         <button
             className={`relative overflow-hidden ${className}`}
             onClick={handleClick}
+            type={type}
         >
             {ripples.map((ripple) => (
                 <span
