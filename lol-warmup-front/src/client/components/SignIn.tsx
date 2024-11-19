@@ -5,7 +5,7 @@ import RippleButton from "./ui/RippleButton";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import signIn from "@/services/user-service";
+import { signIn, signUp } from "@/services/user-service";
 import { AuthService } from '@/services/auth-service';
 
 const signInSchema = Yup.object().shape({
@@ -40,14 +40,17 @@ export default function SignIn({ setIsSignedIn }: { setIsSignedIn: (isSignedIn: 
 
     const formikSignUp = useFormik({
         initialValues: { username: "", password: "" },
-        validationSchema: signInSchema,
+        validationSchema: signUpSchema,
         onSubmit: async (values) => {
             console.log(values);
-            const response = await signIn(values.username, values.password);
+            const response = await signUp(values.username, values.password);
             console.log(response);
             if (response.status !== 200) {
                 console.log("Couldn't sign up");
             }
+
+            AuthService.setToken(response.access_token);
+            setIsSignedIn(true);
         },
     });
 
@@ -133,12 +136,14 @@ export default function SignIn({ setIsSignedIn }: { setIsSignedIn: (isSignedIn: 
                                         <User className="w-6 h-6 text-[#8F8F8F] ml-4" />
                                         <input type="text" id="username" placeholder="Username"
                                             className="w-full pl-6 py-2 bg-transparent text-[#8F8F8F] focus:outline-none placeholder:text-[#8F8F8F] font-[family-name:var(--font-geist-mono)]"
+                                            {...formikSignUp.getFieldProps('username')}
                                         />
                                     </div>
                                     <div className="flex w-full bg-[#171B21] rounded-md p-2 mt-4 justify-center items-center">
                                         <LockKeyhole className="w-6 h-6 text-[#8F8F8F] ml-4" />
                                         <input type="password" id="password" placeholder="Password"
                                             className="w-full pl-6 py-2 bg-transparent text-[#8F8F8F] focus:outline-none placeholder:text-[#8F8F8F] font-[family-name:var(--font-geist-mono)]"
+                                            {...formikSignUp.getFieldProps('password')}
                                         />
                                     </div>
                                     <RippleButton type="submit" className="w-full h-16 mt-4 bg-[#E1B230] text-white rounded-md p-2 text-2xl font-medium font-[family-name:var(--font-geist-mono)]">
