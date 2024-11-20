@@ -15,6 +15,8 @@ export default function Home() {
   const [time, setTime] = useState<number>(0);
   const [qClick, setQClick] = useState<boolean>(false);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [gameMode, setGameMode] = useState<string>('0');
+  const [isGameModeSelected, setIsGameModeSelected] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen min-w-full">
@@ -34,16 +36,25 @@ export default function Home() {
           qClick={qClick}
           setQClick={setQClick}
           setIsSignedIn={setIsSignedIn}
+          isGameModeSelected={isGameModeSelected}
+          setIsGameModeSelected={setIsGameModeSelected}
         />}
         {isSignedIn && <Game
           size={size}
           setSize={setSize}
           warmUp={warmUp}
+          setWarmUp={setWarmUp}
           score={score}
           setScore={setScore}
           time={time}
           setTime={setTime}
           qClick={qClick}
+          gameMode={gameMode}
+          setGameMode={setGameMode}
+          isGameModeSelected={isGameModeSelected}
+          setIsGameModeSelected={setIsGameModeSelected}
+          timer={timer}
+          setTimer={setTimer}
         />}
         {isSignedIn && timer && <Timer
           warmUp={warmUp}

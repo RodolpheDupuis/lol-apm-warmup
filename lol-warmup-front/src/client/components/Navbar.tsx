@@ -5,7 +5,7 @@ import { RotateCcw, Settings, Trophy, User } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 export default function Navbar(
-    { size, setSize, warmUp, setWarmUp, timer, setTimer, score, setScore, time, setTime, qClick, setQClick, setIsSignedIn }: 
+    { size, setSize, warmUp, setWarmUp, timer, setTimer, score, setScore, time, setTime, qClick, setQClick, setIsSignedIn, isGameModeSelected, setIsGameModeSelected }: 
     { 
         size: string,
         setSize: (size: string) => void,
@@ -19,7 +19,9 @@ export default function Navbar(
         setTime: (time: number) => void,
         qClick: boolean,
         setQClick: (qClick: boolean) => void,
-        setIsSignedIn: (isSignedIn: boolean) => void
+        setIsSignedIn: (isSignedIn: boolean) => void,
+        isGameModeSelected: boolean,
+        setIsGameModeSelected: (isGameModeSelected: boolean) => void
     }) {
     const [visible, setVisible] = useState<Boolean>(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState<Boolean>(false);
@@ -72,7 +74,7 @@ export default function Navbar(
                 </div>
                 <div className="font-[family-name:var(--font-geist-mono)] text-xl flex items-center justify-center">
                     <button
-                        onClick={() => setTimer(true)} disabled={timer === true || warmUp === true}
+                        onClick={() => setIsGameModeSelected(true)} disabled={timer === true || warmUp === true || isGameModeSelected === true}
                         className="p-4 rounded-full bg-[#E1B230] disabled:opacity-50 hover:bg-[#E1B230]/80 transition-all duration-300 ease"
                         style={{transition: 'opacity 300ms ease'}}
                     >

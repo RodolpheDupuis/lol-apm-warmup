@@ -7,7 +7,7 @@ interface IPosition {
     y: number
 }
 
-export default function Game({ size, setSize, warmUp, score, setScore, time, setTime, qClick }: { size: string, setSize: (size: string) => void, warmUp: boolean, score: number, setScore: (score: number) => void, time: number, setTime: (time: number) => void, qClick: boolean }) {
+export default function Game({ size, setSize, warmUp, setWarmUp, score, setScore, time, setTime, qClick, gameMode, setGameMode, isGameModeSelected, setIsGameModeSelected, timer, setTimer }: { size: string, setSize: (size: string) => void, warmUp: boolean, setWarmUp: (warmUp: boolean) => void, score: number, setScore: (score: number) => void, time: number, setTime: (time: number) => void, qClick: boolean, gameMode: string, setGameMode: (gameMode: string) => void, isGameModeSelected: boolean, setIsGameModeSelected: (isGameModeSelected: boolean ) => void, timer: Boolean, setTimer: (timer: Boolean) => void }) {
     const [position, setPosition] = useState<IPosition>({x: window.screen.width / 2 - 50, y: window.screen.height / 2 - 50});
     const [qKey, setQKey] = useState<boolean>(false);
 
@@ -73,15 +73,26 @@ export default function Game({ size, setSize, warmUp, score, setScore, time, set
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
+    function handleGameModeSelection(mode: string) {
+        setGameMode(mode);
+        setIsGameModeSelected(false);
+        setTime(parseInt(mode) + 3);
+        setTimer(true);
+    }
+
     useEffect(() => {
-        const timer = setInterval(() => {
-            setTime(time + 1);
+        const gameTimer = setInterval(() => {
+            setTime(time - 1);
+            if (time === 0) {
+                setWarmUp(false);
+                setGameMode('0');
+            }
         }, 1000);
-        return () => clearInterval(timer);
+        return () => clearInterval(gameTimer);
     }, [time]);
 
-    return (
-        warmUp === true && <div className="min-w-full min-h-screen">
+    if (warmUp && gameMode !== '0' && !isGameModeSelected) {
+        return <div className="min-w-full min-h-screen">
             <button id="target" 
                 onClick={handleTargetClick} 
                 className="absolute rounded-full z-10" 
@@ -112,5 +123,21 @@ export default function Game({ size, setSize, warmUp, score, setScore, time, set
                 </div>
             </div>
         </div>
-    )
+    } else if (isGameModeSelected) {
+        return (
+            <div className="min-w-full min-h-screen flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-[40%] h-[60%] font-[family-name:var(--font-geist-mono)] bg-signBackground rounded-xl p-10">
+                    <div className="flex flex-row items-center justify-center w-full">
+                        <h1 className="text-2xl font-medium">Select your game mode</h1>
+                    </div>
+                    <div className="flex flex-row items-center justify-between w-[60%] mt-10">
+                        <button onClick={() => handleGameModeSelection('30')} className="w-[100px] h-[100px] bg-[#E1B230] hover:bg-[#E1B230]/80 rounded-xl p-2 transition-all duration-200 ease">30s</button>
+                        <button onClick={() => handleGameModeSelection('60')} className="w-[100px] h-[100px] bg-[#E1B230] hover:bg-[#E1B230]/80 rounded-xl p-2 transition-all duration-200 ease">60s</button>
+                        <button onClick={() => handleGameModeSelection('120')} className="w-[100px] h-[100px] bg-[#E1B230] hover:bg-[#E1B230]/80 rounded-xl p-2 transition-all duration-200 ease">120s</button>
+                    </div>
+                    <div className="pt-10 cursor-pointer text-[#8F8F8F] hover:text-[white]/80 transition-all duration-200 ease" onClick={() => setIsGameModeSelected(false)}>Close</div>
+                </div>
+            </div>
+        )
+    }
 }
